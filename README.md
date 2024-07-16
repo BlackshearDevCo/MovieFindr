@@ -34,3 +34,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Sources
+
+[How to set up NextJS 14 with Apollo Client?](https://medium.com/@sehrawy/how-to-set-up-nextjs-14-with-apollo-client-754a177e0a00) - Used for setting up Apollo Client with Next.js 14 (only part of their code was used, the rest of the article was for reference)

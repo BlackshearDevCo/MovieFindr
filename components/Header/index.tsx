@@ -5,7 +5,7 @@ import { SearchInput } from "./SearchInput";
 
 export function Header() {
   return (
-    <header className="w-full flex justify-between items-center bg-primary text-background py-4 px-4 md:px-6">
+    <header className="w-full sticky top-0 z-40 flex justify-between items-center bg-primary text-background py-4 px-4 md:px-6 h-20">
       <div className="flex gap-12">
         <Link href="/" prefetch={false}>
           <h1 className="font-extrabold uppercase text-xl tracking-tight">

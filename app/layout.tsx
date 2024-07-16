@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import clsx from "clsx";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { SWRConfig } from "swr";
+import { SWRProvider } from "@/lib/SWRProvider";
 
 const fontHeading = Inter({
   subsets: ["latin"],
@@ -30,7 +32,7 @@ export default function RootLayout({
       <body
         className={clsx("antialiased", fontHeading.variable, fontBody.variable)}
       >
-        {children}
+        <SWRProvider>{children}</SWRProvider>
       </body>
     </html>
   );

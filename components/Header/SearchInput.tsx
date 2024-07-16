@@ -47,8 +47,7 @@ export function SearchInput() {
       />
       <ComboboxOptions
         anchor="bottom"
-        portal={false}
-        className="border-2 border-secondary drop-shadow empty:invisible w-80 my-2 rounded py-2 bg-background"
+        className="z-50 border-2 border-secondary drop-shadow empty:invisible w-80 my-2 rounded py-2 bg-background"
       >
         {filteredPeople.map((person) => (
           <ComboboxOption
