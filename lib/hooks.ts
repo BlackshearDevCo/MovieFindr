@@ -1,7 +1,9 @@
 import useSWR from "swr";
 import {
   ApiMoviesParams,
+  ApiParams,
   getAuthTokenRoute,
+  getGenresRoute,
   getMoviesRoute,
 } from "@/lib/routes/api";
 
@@ -23,4 +25,8 @@ export const useFetch = (path: string) => {
 
 export const useMovies = (params?: ApiMoviesParams) => {
   return useFetch(getMoviesRoute(params));
+};
+
+export const useGenres = (params?: ApiParams) => {
+  return useFetch(getGenresRoute(params));
 };

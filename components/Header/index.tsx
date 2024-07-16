@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import Link, { LinkProps } from "next/link";
 import React from "react";
-import { SearchInput } from "./SearchInput";
 
 export function Header() {
   return (
@@ -19,8 +18,6 @@ export function Header() {
           <HeaderLink href="/genres">Genres</HeaderLink>
         </nav>
       </div>
-
-      <SearchInput />
     </header>
   );
 }
