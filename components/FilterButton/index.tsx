@@ -1,36 +1,21 @@
 import React from "react";
-import { getHomeRoute } from "@/lib/routes/client";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { FilterIcon } from "@/components/FilterIcon";
-import Link from "next/link";
-import { useGenres } from "@/lib/hooks";
 import { Oval } from "react-loader-spinner";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useQuery } from "@/lib/hooks";
+import { GENRE_LIST_QUERY } from "@/lib/queries";
 
 export function FilterButton() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const { data: genres } = useGenres();
+  const { data: genresData, loading } = useQuery(GENRE_LIST_QUERY);
 
-  if (!genres?.length)
-    return (
-      <div className="border border-text rounded px-2 py-1 w-min text-primary">
-        <Oval
-          visible={true}
-          height="24"
-          width="24"
-          color="currentColor"
-          secondaryColor="currentColor"
-          strokeWidth={6}
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-        />
-        <span className="sr-only">Filter</span>
-      </div>
-    );
+  if (loading || !genresData) return <>Loading...</>;
+
+  const genres = genresData?.genres?.nodes;
 
   return (
     <Menu>
