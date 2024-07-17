@@ -17,6 +17,63 @@
     --secondary: #263582;
     --accent: #546ad9;
   }
+
+  .amethyst {
+    --text: #120917;
+    --background: #f7f1fa;
+    --primary: #9d3bcc;
+    --secondary: #c683e5;
+    --accent: #bb60e6;
+  }
+  .amethyst.dark {
+    --text: #f2e9f6;
+    --background: #0c050f;
+    --primary: #9532c3;
+    --secondary: #5c1a7a;
+    --accent: #74199f;
+  }
+  .frost {
+    --text: #050a0b;
+    --background: #f6fbfc;
+    --primary: #34b1d0;
+    --secondary: #86daef;
+    --accent: #49d4f6;
+  }
+  .frost.dark {
+    --text: #f4f9fa;
+    --background: #030708;
+    --primary: #2fabca;
+    --secondary: #10657a;
+    --accent: #0892b4;
+  }
+  .ash {
+    --text: #0f1010;
+    --background: #fbfbfb;
+    --primary: #7d989b;
+    --secondary: #a6c0c2;
+    --accent: #8ab4b8;
+  }
+  .ash.dark {
+    --text: #eff0f0;
+    --background: #050505;
+    --primary: #647f82;
+    --secondary: #3c5658;
+    --accent: #487175;
+  }
+  .sunset {
+    --text: #090202;
+    --background: #fdf6f5;
+    --primary: #da413d;
+    --secondary: #ebc193;
+    --accent: #e1b85e;
+  }
+  .sunset.dark {
+    --text: #fdf7f7;
+    --background: #090202;
+    --primary: #c12a25;
+    --secondary: #6c4114;
+    --accent: #9f761d;
+  }
 }
 
 body {

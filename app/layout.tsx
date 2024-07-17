@@ -5,6 +5,7 @@ import "./globals.css";
 import { SWRProvider } from "@/lib/SWRProvider";
 import { ApolloWrapper } from "@/app/ApolloProvider";
 import { Header } from "@/components/Header";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const fontHeading = Inter({
   subsets: ["latin"],

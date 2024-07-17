@@ -1,7 +1,11 @@
+"use client";
+
 import { getFeaturedRoute, getHomeRoute } from "@/lib/routes/client";
 import clsx from "clsx";
 import Link, { LinkProps } from "next/link";
 import React from "react";
+import { ThemeDropdown } from "@/components/Header/ThemeDropdown";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export function Header() {
   return (
@@ -18,6 +22,10 @@ export function Header() {
           <HeaderLink href={getFeaturedRoute()}>Featured Movies</HeaderLink>
         </nav>
       </div>
+
+      <ThemeProvider>
+        <ThemeDropdown />
+      </ThemeProvider>
     </header>
   );
 }

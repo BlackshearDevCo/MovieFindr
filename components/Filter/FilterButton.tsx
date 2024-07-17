@@ -29,7 +29,7 @@ export function FilterButton() {
             "border-2 rounded px-2 py-1 disabled:opacity-30",
             !!selectedGenre
               ? "bg-secondary border-secondary text-background"
-              : "border-text text-text"
+              : "border-secondary bg-background text-secondary"
           )}
         >
           <FilterIcon />
