@@ -18,16 +18,15 @@ export function FilterButton() {
 
   const { data: genresData, loading } = useQuery(GENRE_LIST_QUERY);
 
-  if (loading || !genresData) return <>Loading...</>;
-
   const genres = genresData?.genres?.nodes;
 
   return (
     <div className="flex justify-start items-center gap-3">
       <Menu>
         <MenuButton
+          disabled={loading || !genresData}
           className={clsx(
-            "border-2 rounded px-2 py-1",
+            "border-2 rounded px-2 py-1 disabled:opacity-30",
             !!selectedGenre
               ? "bg-secondary border-secondary text-background"
               : "border-text text-text"

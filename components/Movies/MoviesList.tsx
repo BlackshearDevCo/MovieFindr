@@ -8,6 +8,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getCurrentMovieCount, getTotalMovieCount } from "@/lib/utils";
 import { MOVIES_PREVIEW_QUERY } from "@/lib/queries";
 import { useQuery } from "@/lib/hooks";
+import { MovieCardSkeleton } from "@/components/MovieCard/MovieCardSkeleton";
 
 type Props = {
   movies: Movie[];

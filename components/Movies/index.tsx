@@ -8,6 +8,7 @@ import { FilterButton } from "../Filter/FilterButton";
 import { useDebounce } from "use-debounce";
 import { Input } from "@headlessui/react";
 import { MoviesList } from "./MoviesList";
+import { MovieCardSkeleton } from "../MovieCard/MovieCardSkeleton";
 
 const LIMIT = 25;
 
@@ -45,8 +46,6 @@ export function MoviesSection() {
 
   const movies = moviesData?.movies?.nodes;
 
-  console.log(moviesData);
-
   return (
     <div className="container mx-auto px-4 min-h-80 mb-8">
       <section className="flex items-center gap-2 mb-4">
@@ -76,7 +75,18 @@ export function MoviesSection() {
           currentPage={currentPage}
         />
       ) : (
-        <h2>Loading...</h2>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+          <MovieCardSkeleton />
+        </div>
       )}
     </div>
   );
