@@ -24,6 +24,7 @@ type MoviePreview = {
 type Genre = {
   id: string;
   title: string;
+  movies?: MoviePreview[];
 };
 
 type Movie = {

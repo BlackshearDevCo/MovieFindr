@@ -63,3 +63,37 @@ export const GENRE_LIST_QUERY = gql`
     }
   }
 `;
+
+export const GENRES_QUERY = gql`
+  query GENRES_QUERY {
+    genres {
+      nodes {
+        id
+        title
+        movies {
+          id
+          title
+          posterUrl
+        }
+      }
+      pagination {
+        page
+        totalPages
+      }
+    }
+  }
+`;
+
+export const GENRE_QUERY = gql`
+  query Genre($genreId: ID!) {
+    genre(id: $genreId) {
+      id
+      title
+      movies {
+        id
+        title
+        posterUrl
+      }
+    }
+  }
+`;

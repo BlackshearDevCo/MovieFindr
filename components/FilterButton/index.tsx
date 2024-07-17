@@ -1,7 +1,6 @@
 import React from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { FilterIcon } from "@/components/FilterIcon";
-import { Oval } from "react-loader-spinner";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@/lib/hooks";
 import { GENRE_LIST_QUERY } from "@/lib/queries";

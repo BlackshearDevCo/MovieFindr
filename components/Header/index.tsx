@@ -1,3 +1,4 @@
+import { getFeaturedRoute, getHomeRoute } from "@/lib/routes/client";
 import clsx from "clsx";
 import Link, { LinkProps } from "next/link";
 import React from "react";
@@ -13,8 +14,8 @@ export function Header() {
         </Link>
 
         <nav className="flex items-center gap-6">
-          <HeaderLink href="/">Home</HeaderLink>
-          <HeaderLink href="/genres">Genres</HeaderLink>
+          <HeaderLink href={getHomeRoute()}>Home</HeaderLink>
+          <HeaderLink href={getFeaturedRoute()}>Featured Movies</HeaderLink>
         </nav>
       </div>
     </header>

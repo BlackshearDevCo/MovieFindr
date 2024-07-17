@@ -5,11 +5,11 @@ import { MovieCard } from "@/components/MovieCard";
 import { useQuery } from "@/lib/hooks";
 import { MOVIES_PREVIEW_QUERY } from "@/lib/queries";
 import { Input } from "@headlessui/react";
-import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
-import ReactPaginate from "react-paginate";
 import { useDebounce } from "use-debounce";
+import Paginate from "../Paginate";
+import { getCurrentMovieCount, getTotalMovieCount } from "@/lib/utils";
 
 const LIMIT = 25;
 
@@ -66,9 +66,15 @@ export function MoviesList() {
   const movies = moviesData?.movies?.nodes;
   const lastMoviesPage = lastMoviesPageData?.movies?.nodes;
   const totalPages = moviesData?.movies?.pagination?.totalPages;
-
-  const sharedPaginateClasses =
-    "inline-flex justify-center items-center hover:bg-accent hover:text-background rounded-md bg-background transition-colors focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50";
+  const totalMoviesCount = useMemo(
+    () =>
+      getTotalMovieCount({
+        totalPages,
+        endPageLength: lastMoviesPage?.length,
+        limit: LIMIT,
+      }),
+    [lastMoviesPage, totalPages]
+  );
 
   return (
     <div className="container mx-auto px-4 min-h-80 mb-8">
@@ -97,43 +103,33 @@ export function MoviesList() {
         </div>
       </section>
 
-      <div className="flex flex-col justify-center items-center mt-6">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="Next"
-          forcePage={parseInt(searchParams.get("page") || "1") - 1}
-          onPageChange={(page) => routeToPage(page.selected + 1)}
-          pageRangeDisplayed={5}
-          pageCount={totalPages || 0}
-          previousLabel="Previous"
-          renderOnZeroPageCount={null}
-          containerClassName="flex mx-auto w-min gap-2 mb-2"
-          activeLinkClassName="bg-text text-background transition-colors"
-          pageClassName="text-text transition-colors text-base"
-          pageLinkClassName={clsx("h-8 w-8", sharedPaginateClasses)}
-          breakLinkClassName={clsx("h-8 w-8", sharedPaginateClasses)}
-          nextClassName={clsx("px-2", sharedPaginateClasses)}
-          previousClassName={clsx("px-2", sharedPaginateClasses)}
-        />
-
-        <p>
-          Viewing {getCurrentMovieCount().startIndex} -{" "}
-          {getCurrentMovieCount().endIndex} of {getTotalMovieCount()}
-        </p>
-      </div>
+      <Paginate
+        forcePage={parseInt(searchParams.get("page") || "1") - 1}
+        onPageChange={(page) => routeToPage(page.selected + 1)}
+        pageCount={totalPages || 0}
+        startMovieCountIndex={
+          getCurrentMovieCount({ currentPage, limit: LIMIT, totalMoviesCount })
+            .startIndex
+        }
+        endMovieCountIndex={
+          getCurrentMovieCount({ currentPage, limit: LIMIT, totalMoviesCount })
+            .endIndex
+        }
+        totalMovieCount={totalMoviesCount}
+      />
     </div>
   );
 
-  function getTotalMovieCount() {
-    if (!totalPages || !lastMoviesPage) return 0;
-    return (totalPages - 1) * LIMIT + lastMoviesPage?.length;
-  }
+  // function getTotalMovieCount() {
+  //   if (!totalPages || !lastMoviesPage) return 0;
+  //   return (totalPages - 1) * LIMIT + lastMoviesPage?.length;
+  // }
 
-  function getCurrentMovieCount() {
-    const startIndex = (currentPage - 1) * LIMIT + 1;
-    const endIndex = Math.min(currentPage * LIMIT, getTotalMovieCount());
-    return { startIndex, endIndex };
-  }
+  // function getCurrentMovieCount() {
+  //   const startIndex = (currentPage - 1) * LIMIT + 1;
+  //   const endIndex = Math.min(currentPage * LIMIT, getTotalMovieCount());
+  //   return { startIndex, endIndex };
+  // }
 
   function routeToPage(page: number) {
     router.push(`${pathname}?${createQueryString("page", String(page))}`);
