@@ -10,6 +10,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useDebounce } from "use-debounce";
 import Paginate from "../Paginate";
 import { getCurrentMovieCount, getTotalMovieCount } from "@/lib/utils";
+import { EmptyMoviesList } from "@/components/MoviesList/EmptyMoviesList";
 
 const LIMIT = 25;
 
@@ -35,7 +36,7 @@ export function MoviesList() {
     [searchParams, currentPage, searchValue]
   );
 
-  const { data: moviesData } = useQuery(MOVIES_PREVIEW_QUERY, {
+  const { data: moviesData, loading } = useQuery(MOVIES_PREVIEW_QUERY, {
     variables: {
       search: variables.search,
       genre: variables.genre,
@@ -76,6 +77,8 @@ export function MoviesList() {
     [lastMoviesPage, totalPages]
   );
 
+  if (loading || !moviesData) return <>Loading...</>;
+
   return (
     <div className="container mx-auto px-4 min-h-80 mb-8">
       <section className="flex items-center gap-2 mb-4">
@@ -96,40 +99,41 @@ export function MoviesList() {
       </section>
 
       <section>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
-          {movies?.map((movie: MoviePreview) => (
-            <MovieCard movie={movie} key={movie.id} />
-          ))}
-        </div>
+        {movies?.length ? (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
+            {movies?.map((movie: MoviePreview) => (
+              <MovieCard movie={movie} key={movie.id} />
+            ))}
+          </div>
+        ) : (
+          <EmptyMoviesList />
+        )}
       </section>
 
-      <Paginate
-        forcePage={parseInt(searchParams.get("page") || "1") - 1}
-        onPageChange={(page) => routeToPage(page.selected + 1)}
-        pageCount={totalPages || 0}
-        startMovieCountIndex={
-          getCurrentMovieCount({ currentPage, limit: LIMIT, totalMoviesCount })
-            .startIndex
-        }
-        endMovieCountIndex={
-          getCurrentMovieCount({ currentPage, limit: LIMIT, totalMoviesCount })
-            .endIndex
-        }
-        totalMovieCount={totalMoviesCount}
-      />
+      {!!movies?.length && (
+        <Paginate
+          forcePage={parseInt(searchParams.get("page") || "1") - 1}
+          onPageChange={(page) => routeToPage(page.selected + 1)}
+          pageCount={totalPages || 0}
+          startMovieCountIndex={
+            getCurrentMovieCount({
+              currentPage,
+              limit: LIMIT,
+              totalMoviesCount,
+            }).startIndex
+          }
+          endMovieCountIndex={
+            getCurrentMovieCount({
+              currentPage,
+              limit: LIMIT,
+              totalMoviesCount,
+            }).endIndex
+          }
+          totalMovieCount={totalMoviesCount}
+        />
+      )}
     </div>
   );
-
-  // function getTotalMovieCount() {
-  //   if (!totalPages || !lastMoviesPage) return 0;
-  //   return (totalPages - 1) * LIMIT + lastMoviesPage?.length;
-  // }
-
-  // function getCurrentMovieCount() {
-  //   const startIndex = (currentPage - 1) * LIMIT + 1;
-  //   const endIndex = Math.min(currentPage * LIMIT, getTotalMovieCount());
-  //   return { startIndex, endIndex };
-  // }
 
   function routeToPage(page: number) {
     router.push(`${pathname}?${createQueryString("page", String(page))}`);
