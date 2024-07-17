@@ -17,7 +17,9 @@ export function MoviesSection() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(
+    decodeURI(searchParams.get("search") || "")
+  );
   const [searchValue] = useDebounce(query, 250);
 
   const currentPage = useMemo(
