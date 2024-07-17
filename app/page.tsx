@@ -19,13 +19,19 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <Image
-              src="https://generated.vusercontent.net/placeholder.svg"
-              width={550}
-              height={310}
-              alt="Hero"
-              className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-            />
+            <div className="relative">
+              <Image
+                // Credit: Samuel Regan-Asante [https://unsplash.com/photos/the-walking-dead-dvd-movie-wMkaMXTJjlQ]
+                src="https://images.unsplash.com/photo-1616530940355-351fabd9524b?q=80&w=3024&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                width={550}
+                height={310}
+                alt="Hero"
+                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+              />
+              <p className="absolute bottom-2 left-2 text-text text-xs opacity-50">
+                Credit: Samuel Regan-Asante
+              </p>
+            </div>
           </div>
         </div>
       </section>

@@ -14,6 +14,12 @@ const nextConfig = {
         port: "",
         pathname: "/placeholder.svg",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        port: "",
+        pathname: "/photo-1616530940355-351fabd9524b",
+      },
     ],
   },
 };
