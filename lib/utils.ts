@@ -1,13 +1,13 @@
 type GetTotalMovieCountProps = {
   totalPages: number;
   endPageLength: number;
-  limit: number;
+  limit: Maybe<number>;
 };
 
 export function getTotalMovieCount({
   totalPages = 0,
   endPageLength = 0,
-  limit,
+  limit = 25,
 }: GetTotalMovieCountProps) {
   if (!totalPages) return 0;
   return (totalPages - 1) * limit + endPageLength;
@@ -15,13 +15,13 @@ export function getTotalMovieCount({
 
 type GetCurrentMovieCountProps = {
   currentPage: number;
-  limit: number;
+  limit: Maybe<number>;
   totalMoviesCount: number;
 };
 
 export function getCurrentMovieCount({
   currentPage,
-  limit,
+  limit = 25,
   totalMoviesCount,
 }: GetCurrentMovieCountProps) {
   const startIndex = (currentPage - 1) * limit + 1;

@@ -3,10 +3,10 @@ type Nullable<T> = T | null;
 type Maybe<T> = T | undefined;
 
 type ApiMoviesParams = {
-  page?: number;
-  limit?: number;
-  search?: string;
-  genre?: string;
+  page: Maybe<number>;
+  limit: Maybe<number>;
+  search: Maybe<string>;
+  genre: Maybe<string>;
 };
 
 type SWRData<T> = {

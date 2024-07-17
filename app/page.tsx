@@ -1,4 +1,4 @@
-import { MoviesList } from "@/components/MoviesList";
+import { MoviesSection } from "@/components/Movies";
 import Image from "next/image";
 import { Suspense } from "react";
 
@@ -37,7 +37,7 @@ export default function Home() {
       </section>
 
       <Suspense>
-        <MoviesList />
+        <MoviesSection />
       </Suspense>
     </main>
   );
