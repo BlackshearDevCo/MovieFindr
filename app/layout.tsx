@@ -24,10 +24,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  movie,
   children,
 }: Readonly<{
-  movie: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -38,7 +36,6 @@ export default function RootLayout({
         <ApolloWrapper>
           <SWRProvider>
             <Header />
-            <div>{movie}</div>
             <div>{children}</div>
           </SWRProvider>
         </ApolloWrapper>
