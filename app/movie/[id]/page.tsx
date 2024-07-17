@@ -1,16 +1,23 @@
 "use client";
 
-import { useMovie } from "@/lib/hooks";
+import { useQuery } from "@/lib/hooks";
+import { MOVIE_QUERY } from "@/lib/queries";
 import { getHomeRoute } from "@/lib/routes/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 export default function MoviePage({ params }: { params: { id: string } }) {
-  const { data: movie } = useMovie(params.id);
+  const { data: movieData, loading } = useQuery(MOVIE_QUERY, {
+    variables: {
+      movieId: params.id,
+    },
+  });
 
   // TODO: Add loading state
-  if (!movie) return null;
+  if (loading) return <>Loading...</>;
+
+  const movie: Movie = movieData.movie;
 
   return (
     <div className="container mx-auto mt-8 px-4 md:px-0">
@@ -97,21 +104,6 @@ export default function MoviePage({ params }: { params: { id: string } }) {
   );
 
   function getGenres() {
-    return movie?.genres?.map((genre) => genre.title).join(", ");
+    return movie?.genres?.map((genre: Genre) => genre.title).join(", ");
   }
 }
-
-// id	"4Of0hHwbRXr2X7OzFEGZKl"
-// title	"Akira"
-// posterUrl	"https://m.media-amazon.com/images/M/MV5BNjFmNWYzZjMtYWIyZi00NDVmLWIxY2EtN2RiMjZiMDk4MzcyXkEyXkFqcGdeQXVyMTg2NjYzOA@@._V1_.jpg"
-// rating	"AA"
-// summary	"A secret military project endangers Neo-Tokyo when it turns a biker gang member into a rampaging psychic psychopath who can only be stopped by a teenager, his gang of biker friends and a group of psychics."
-// duration	"PT2H4M"
-// directors	[ "Katsuhiro Ôtomo" ]
-// mainActors	[ "Mitsuo Iwata", "Nozomu Sasaki", "Mami Koyama" ]
-// datePublished	"1988-07-16"
-// ratingValue	8
-// bestRating	10
-// worstRating	1
-// writers	[ "Katsuhiro Ôtomo", "Izô Hashimoto" ]
-// genres	[ {…}, {…}, {…} ]

@@ -2,15 +2,23 @@ type Nullable<T> = T | null;
 
 type Maybe<T> = T | undefined;
 
+type ApiMoviesParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  genre?: string;
+};
+
 type SWRData<T> = {
   data: T;
   totalPages: number;
 };
 
-type MovieShort = {
+type MoviePreview = {
   id: string;
   title: string;
   posterUrl?: string;
+  genres?: Genre[];
 };
 
 type Genre = {
