@@ -48,7 +48,7 @@ export function MoviesSection() {
 
   return (
     <div className="container mx-auto px-4 min-h-80 mb-8">
-      <section className="flex items-center gap-2 mb-4">
+      <section className="flex items-center gap-2 mb-4 flex-wrap sm:flex-nowrap">
         <Input
           name="Search"
           type="text"

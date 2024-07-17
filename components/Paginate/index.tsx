@@ -25,7 +25,7 @@ export default function Paginate({
         pageRangeDisplayed={5}
         previousLabel="Previous"
         renderOnZeroPageCount={null}
-        containerClassName="flex mx-auto w-min gap-2 mb-2"
+        containerClassName="flex mx-auto gap-2 mb-2 flex-wrap justify-center"
         activeLinkClassName="bg-text text-background transition-colors"
         pageClassName="text-text transition-colors text-base"
         pageLinkClassName={clsx("h-8 w-8", sharedPaginateClasses)}
