@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import clsx from "clsx";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SWRConfig } from "swr";
 import { SWRProvider } from "@/lib/SWRProvider";
+import { ApolloWrapper } from "@/app/ApolloProvider";
+import { Header } from "@/components/Header";
 
 const fontHeading = Inter({
   subsets: ["latin"],
@@ -23,8 +24,10 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
+  movie,
   children,
 }: Readonly<{
+  movie: React.ReactNode;
   children: React.ReactNode;
 }>) {
   return (
@@ -32,7 +35,13 @@ export default function RootLayout({
       <body
         className={clsx("antialiased", fontHeading.variable, fontBody.variable)}
       >
-        <SWRProvider>{children}</SWRProvider>
+        <ApolloWrapper>
+          <SWRProvider>
+            <Header />
+            <div>{movie}</div>
+            <div>{children}</div>
+          </SWRProvider>
+        </ApolloWrapper>
       </body>
     </html>
   );

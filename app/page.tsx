@@ -1,25 +1,58 @@
 "use client";
 
-import { FilterIcon } from "@/components/FilterIcon";
-import { Header } from "@/components/Header";
+import { FilterButton } from "@/components/FilterButton";
 import { MovieCard } from "@/components/MovieCard";
-import { useGenres, useMovies } from "@/lib/hooks";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useMovies } from "@/lib/hooks";
+import { ApiMoviesParams } from "@/lib/routes/api";
+import { Input } from "@headlessui/react";
 import Image from "next/image";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useMemo, useState } from "react";
+import ReactPaginate from "react-paginate";
+import { useDebounce } from "use-debounce";
+
+const LIMIT = 25;
 
 export default function Home() {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { data: movies } = useMovies({
-    genre: decodeURI(searchParams.get("genre") || ""),
+
+  const [query, setQuery] = useState("");
+  const [searchValue] = useDebounce(query, 250);
+
+  const currentPage = useMemo(
+    () => parseInt(searchParams.get("page") || "1"),
+    [searchParams]
+  );
+  const variables = useMemo<ApiMoviesParams>(
+    () => ({
+      search: searchValue || "",
+      page: currentPage,
+      genre: decodeURI(searchParams.get("genre") || ""),
+      limit: LIMIT,
+    }),
+    [searchParams, currentPage, searchValue]
+  );
+
+  const { data: movies, totalPages } = useMovies(variables);
+  const { data: lastPageMovies } = useMovies({
+    ...variables,
+    page: totalPages,
   });
-  const { data: genres } = useGenres();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
 
   return (
-    <main className="">
-      <Header />
-
+    <main>
       <section className="w-full bg-primary py-12 px-4 md:px-6 mb-6">
         <div className="container mx-auto">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
@@ -46,30 +79,29 @@ export default function Home() {
       </section>
 
       <div className="container mx-auto px-4 min-h-80 mb-8">
-        <Menu>
-          <MenuButton className="border border-text rounded px-2 py-1">
-            <FilterIcon />
-            <span className="sr-only">Filter</span>
-          </MenuButton>
-          <MenuItems
-            anchor="bottom start"
-            className="z-10 border-2 border-secondary drop-shadow empty:invisible [--anchor-gap:4px] w-80 rounded py-2 bg-background"
-          >
-            {genres?.map((genre: any) => (
-              <MenuItem key={genre.id}>
-                <Link
-                  className="block data-[focus]:bg-secondary data-[focus]:text-background px-4 py-2 font-medium"
-                  href={`?genre=${encodeURI(genre.title)}`}
-                >
-                  {genre.title}
-                </Link>
-              </MenuItem>
-            ))}
-          </MenuItems>
-        </Menu>
+        <section className="flex items-center gap-2 mb-4">
+          <Input
+            name="Search"
+            type="text"
+            placeholder="Search for a movie..."
+            className="px-4 py-2 rounded text-text w-80"
+            onChange={(e) => {
+              const params = new URLSearchParams(searchParams.toString());
+              params.set("page", "1");
+              params.set("search", e.target.value);
+              setQuery(e.target.value);
+              router.push(`${pathname}?${params.toString()}`);
+            }}
+          />
+          <FilterButton />
+          <p>
+            Viewing {getCurrentMovieCount().startIndex} -{" "}
+            {getCurrentMovieCount().endIndex} of {getTotalMovieCount()}
+          </p>
+        </section>
 
         <section>
-          <h2 className="mb-4 text-2xl font-bold">Featured Movies</h2>
+          {/* <h2 className="mb-4 text-2xl font-bold">Featured Movies</h2> */}
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
             {movies?.map((movie: MovieShort) => (
@@ -77,7 +109,32 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={(page) => routeToPage(page.selected + 1)}
+          pageRangeDisplayed={5}
+          pageCount={totalPages || 0}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+        />
       </div>
     </main>
   );
+
+  function getTotalMovieCount() {
+    if (!totalPages || !lastPageMovies) return 0;
+    return (totalPages - 1) * LIMIT + lastPageMovies?.length;
+  }
+
+  function getCurrentMovieCount() {
+    const startIndex = (currentPage - 1) * LIMIT + 1;
+    const endIndex = Math.min(currentPage * LIMIT, getTotalMovieCount());
+    return { startIndex, endIndex };
+  }
+
+  function routeToPage(page: number) {
+    router.push(`${pathname}?${createQueryString("page", String(page))}`);
+  }
 }

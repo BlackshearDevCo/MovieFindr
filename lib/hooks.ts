@@ -4,29 +4,36 @@ import {
   ApiParams,
   getAuthTokenRoute,
   getGenresRoute,
+  getMovieRoute,
   getMoviesRoute,
 } from "@/lib/routes/api";
 
 export const useAuthToken = () => {
-  "use client";
   const { data } = useSWR(getAuthTokenRoute());
   return data?.token;
 };
 
-export const useFetch = (path: string) => {
+export const useFetch = <T>(path: string) => {
   const token = useAuthToken();
-  const { data, ...rest } = useSWR([path, token], ([resource, token]) =>
+  const { data, ...rest } = useSWR<T>([path, token], ([resource, token]) =>
     fetch(`${process.env.NEXT_PUBLIC_BASE_PATH}${resource}`, {
       headers: { Authorization: `Bearer ${token}` },
     }).then((res) => res.json())
   );
-  return { data: data?.data, ...rest };
+
+  return { data, ...rest };
 };
 
 export const useMovies = (params?: ApiMoviesParams) => {
-  return useFetch(getMoviesRoute(params));
+  const { data } = useFetch<SWRData<Movie[]>>(getMoviesRoute(params));
+  return { data: data?.data, totalPages: data?.totalPages };
 };
 
 export const useGenres = (params?: ApiParams) => {
-  return useFetch(getGenresRoute(params));
+  const { data } = useFetch<SWRData<Genre[]>>(getGenresRoute(params));
+  return { data: data?.data, totalPages: data?.totalPages };
+};
+
+export const useMovie = (id: string) => {
+  return useFetch<Movie>(getMovieRoute(id));
 };

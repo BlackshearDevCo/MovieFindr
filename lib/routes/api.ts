@@ -29,3 +29,7 @@ export const getGenresRoute = (params?: ApiParams) => {
   const finalParams = queryParams.toString();
   return `/genres/movies${finalParams !== "" ? `?${finalParams}` : ""}`;
 };
+
+export const getMovieRoute = (id: string) => {
+  return `/movies/${id}`;
+};

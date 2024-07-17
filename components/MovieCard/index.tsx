@@ -1,3 +1,4 @@
+import { getMovieDetailsRoute } from "@/lib/routes/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -5,7 +6,7 @@ import React from "react";
 export function MovieCard({ movie }: { movie: MovieShort }) {
   return (
     <Link
-      href="#"
+      href={getMovieDetailsRoute(movie.id)}
       className="relative overflow-hidden rounded-md shadow-md"
       prefetch={false}
     >
