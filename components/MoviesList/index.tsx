@@ -5,6 +5,7 @@ import { MovieCard } from "@/components/MovieCard";
 import { useQuery } from "@/lib/hooks";
 import { MOVIES_PREVIEW_QUERY } from "@/lib/queries";
 import { Input } from "@headlessui/react";
+import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import ReactPaginate from "react-paginate";
@@ -66,6 +67,9 @@ export function MoviesList() {
   const lastMoviesPage = lastMoviesPageData?.movies?.nodes;
   const totalPages = moviesData?.movies?.pagination?.totalPages;
 
+  const sharedPaginateClasses =
+    "inline-flex justify-center items-center hover:bg-accent hover:text-background rounded-md bg-background transition-colors focus:outline-none focus:ring-1 focus:ring-ring disabled:pointer-events-none disabled:opacity-50";
+
   return (
     <div className="container mx-auto px-4 min-h-80 mb-8">
       <section className="flex items-center gap-2 mb-4">
@@ -83,10 +87,6 @@ export function MoviesList() {
           }}
         />
         <FilterButton />
-        <p>
-          Viewing {getCurrentMovieCount().startIndex} -{" "}
-          {getCurrentMovieCount().endIndex} of {getTotalMovieCount()}
-        </p>
       </section>
 
       <section>
@@ -97,15 +97,30 @@ export function MoviesList() {
         </div>
       </section>
 
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={(page) => routeToPage(page.selected + 1)}
-        pageRangeDisplayed={5}
-        pageCount={totalPages || 0}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
-      />
+      <div className="flex flex-col justify-center items-center mt-6">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="Next"
+          forcePage={parseInt(searchParams.get("page") || "1") - 1}
+          onPageChange={(page) => routeToPage(page.selected + 1)}
+          pageRangeDisplayed={5}
+          pageCount={totalPages || 0}
+          previousLabel="Previous"
+          renderOnZeroPageCount={null}
+          containerClassName="flex mx-auto w-min gap-2 mb-2"
+          activeLinkClassName="bg-text text-background transition-colors"
+          pageClassName="text-text transition-colors text-base"
+          pageLinkClassName={clsx("h-8 w-8", sharedPaginateClasses)}
+          breakLinkClassName={clsx("h-8 w-8", sharedPaginateClasses)}
+          nextClassName={clsx("px-2", sharedPaginateClasses)}
+          previousClassName={clsx("px-2", sharedPaginateClasses)}
+        />
+
+        <p>
+          Viewing {getCurrentMovieCount().startIndex} -{" "}
+          {getCurrentMovieCount().endIndex} of {getTotalMovieCount()}
+        </p>
+      </div>
     </div>
   );
 
