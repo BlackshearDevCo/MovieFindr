@@ -1,5 +1,6 @@
 import { MoviesList } from "@/components/MoviesList";
 import Image from "next/image";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -29,7 +30,9 @@ export default function Home() {
         </div>
       </section>
 
-      <MoviesList />
+      <Suspense>
+        <MoviesList />
+      </Suspense>
     </main>
   );
 }
