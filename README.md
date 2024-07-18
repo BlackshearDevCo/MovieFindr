@@ -20,8 +20,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 [How to set up NextJS 14 with Apollo Client?](https://medium.com/@sehrawy/how-to-set-up-nextjs-14-with-apollo-client-754a177e0a00) - Used for setting up Apollo Client with Next.js 14 (only part of their code was used, the rest of the article was for reference).
 
-[Vercel's v0](https://v0.dev) - Used for helping scaffold a design for the site. Not used for functional code generation.
-
 [Realtime Colors](https://www.realtimecolors.com/) - Used for generating a pleasant looking theme and integrating into TailwindCSS.
 
 [Trello](https://trello.com) - Used for tracking tasks and progress.
