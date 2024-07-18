@@ -4,11 +4,11 @@ import React, { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useQuery } from "@/lib/hooks";
 import { MOVIES_PREVIEW_QUERY } from "@/lib/queries";
-import { FilterButton } from "../Filter/FilterButton";
+import { FilterButton } from "@/components/Filter/FilterButton";
 import { useDebounce } from "use-debounce";
 import { Input } from "@headlessui/react";
-import { MoviesList } from "./MoviesList";
-import { MovieCardSkeleton } from "../MovieCard/MovieCardSkeleton";
+import { MoviesList } from "@/components/Movies/MoviesList";
+import { MovieCardSkeleton } from "@/components/MovieCard/MovieCardSkeleton";
 
 const LIMIT = 25;
 

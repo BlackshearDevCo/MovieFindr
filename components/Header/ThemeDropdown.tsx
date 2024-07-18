@@ -2,7 +2,8 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import React, { forwardRef, useContext } from "react";
 import { ThemeContext, Types } from "@/components/ThemeProvider";
 import clsx from "clsx";
-import { SunIcon } from "../SunIcon";
+import { SunIcon } from "@/components/SunIcon";
+import { MoonIcon } from "@/components/MoonIcon";
 
 export function ThemeDropdown() {
   const { state, dispatch } = useContext(ThemeContext);
@@ -10,7 +11,7 @@ export function ThemeDropdown() {
   return (
     <Menu>
       <MenuButton>
-        <SunIcon />
+        {state.isDarkMode === true ? <MoonIcon /> : <SunIcon />}
         <p className="sr-only">Manage theme</p>
       </MenuButton>
       <MenuItems

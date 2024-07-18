@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useCallback, useMemo } from "react";
-import { MovieCard } from "../MovieCard";
-import { EmptyMoviesList } from "./EmptyMoviesList";
-import Paginate from "../Paginate";
+import { MovieCard } from "@/components/MovieCard";
+import { EmptyMoviesList } from "@/components/Movies/EmptyMoviesList";
+import Paginate from "@/components/Paginate";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { getCurrentMovieCount, getTotalMovieCount } from "@/lib/utils";
 import { MOVIES_PREVIEW_QUERY } from "@/lib/queries";
 import { useQuery } from "@/lib/hooks";
-import { MovieCardSkeleton } from "@/components/MovieCard/MovieCardSkeleton";
 
 type Props = {
   movies: Movie[];
