@@ -9,7 +9,6 @@ export function MovieSkeleton() {
       </div>
 
       <section className="w-full">
-        {/* Main Details Section */}
         <div className="h-10 w-96 font-bold mb-2">
           <Skeleton />
         </div>
@@ -49,51 +48,6 @@ export function MovieSkeleton() {
             <Skeleton />
           </div>
         </div>
-        {/* <p className="opacity-60">{getGenres()}</p>
-        <p className="text-lg my-4">{movie?.summary}</p> */}
-
-        {/* <ul className="flex flex-col gap-1">
-          <li>
-            <p>
-              <strong className="font-bold">Rating:</strong> {movie?.rating}
-            </p>
-          </li>
-          <li>
-            <p>
-              <strong className="font-bold">Duration:</strong> {movie?.duration}
-            </p>
-          </li>
-          <li>
-            <p>
-              <strong className="font-bold">Date Published:</strong>{" "}
-              {movie?.datePublished}
-            </p>
-          </li>
-          <li>
-            <p>
-              <strong className="font-bold">Directors:</strong>{" "}
-              {movie?.directors?.join(", ")}
-            </p>
-          </li>
-          <li>
-            <p>
-              <strong className="font-bold">Writers:</strong>{" "}
-              {movie?.writers?.join(", ")}
-            </p>
-          </li>
-          <li>
-            <p>
-              <strong className="font-bold">Main Actors:</strong>{" "}
-              {movie?.mainActors?.join(", ")}
-            </p>
-          </li>
-          <li>
-            <p>
-              <strong className="font-bold">Rating Value:</strong>{" "}
-              {movie?.ratingValue} / {movie?.bestRating}
-            </p>
-          </li>
-        </ul> */}
       </section>
     </div>
   );
